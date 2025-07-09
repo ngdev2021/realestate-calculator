@@ -435,7 +435,10 @@ Give 5-7 specific, actionable steps for structuring this deal optimally, includi
 
     return this.http.post(`${this.apiUrl}?key=${this.apiKey}`, body, { headers })
       .pipe(
-        map(() => true),
+        map((response: any) => {
+          // Check if response is valid
+          return response && response.candidates && response.candidates.length > 0;
+        }),
         catchError(this.handleError)
       );
   }

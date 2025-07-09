@@ -13,6 +13,6 @@ export const environment = {
     measurementId: "YOUR_MEASUREMENT_ID" // Optional
   },
   gemini: {
-    apiKey: "YOUR_GEMINI_API_KEY"
+    apiKey: "AIzaSyA_NviJsF7OYJ6jsYPt0GhKWEjhNrAK18Y"
   }
 }; 

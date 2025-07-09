@@ -10,6 +10,6 @@ export const environment = {
     databaseURL: "https://creative-finance-calculator25-default-rtdb.firebaseio.com"
   },
   gemini: {
-    apiKey: "YOUR_GEMINI_API_KEY"
+    apiKey: "AIzaSyA_NviJsF7OYJ6jsYPt0GhKWEjhNrAK18Y"
   }
 }; 
