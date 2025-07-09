@@ -1,0 +1,104 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold text-gray-900 mb-6">🤖 Gemini API Test Interface</h2>
+
+  <!-- API Key Status -->
+  <div class="mb-6 p-4 rounded-lg" [ngClass]="apiKeyConfigured ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'">
+    <div class="flex items-center">
+      <div class="flex-shrink-0">
+        <span class="text-2xl" [ngClass]="apiKeyConfigured ? 'text-green-600' : 'text-red-600'">
+          {{ apiKeyConfigured ? '🔑' : '❌' }}
+        </span>
+      </div>
+      <div class="ml-3">
+        <h3 class="text-sm font-medium" [ngClass]="apiKeyConfigured ? 'text-green-800' : 'text-red-800'">
+          API Key Status
+        </h3>
+        <p class="text-sm" [ngClass]="apiKeyConfigured ? 'text-green-700' : 'text-red-700'">
+          {{ apiKeyConfigured ? 'API key is configured and ready to use.' : 'API key not configured. Please add your Gemini API key to environment files.' }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instructions -->
+  <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+    <h3 class="text-lg font-semibold text-blue-900 mb-2">📋 Setup Instructions</h3>
+    <ol class="list-decimal list-inside text-blue-800 space-y-1">
+      <li>Go to <a href="https://makersuite.google.com/app/apikey" target="_blank" class="underline">Google AI Studio</a></li>
+      <li>Sign in with your Google account</li>
+      <li>Create a new API key or use an existing one</li>
+      <li>Copy the API key (starts with "AIzaSy...")</li>
+      <li>Replace "YOUR_GEMINI_API_KEY" in both environment files:
+        <ul class="list-disc list-inside ml-4 mt-1">
+          <li><code>src/environments/environment.ts</code></li>
+          <li><code>src/environments/environment.development.ts</code></li>
+        </ul>
+      </li>
+      <li>Restart the development server</li>
+    </ol>
+  </div>
+
+  <!-- Test Buttons -->
+  <div class="mb-6 space-y-3">
+    <button 
+      (click)="testConnection()" 
+      [disabled]="!apiKeyConfigured || isLoading"
+      class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors">
+      🔗 Test API Connection
+    </button>
+
+    <button 
+      (click)="testDealAnalysis()" 
+      [disabled]="!apiKeyConfigured || isLoading"
+      class="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors">
+      📊 Test Deal Analysis
+    </button>
+
+    <button 
+      (click)="testCreativeFinancing()" 
+      [disabled]="!apiKeyConfigured || isLoading"
+      class="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors">
+      💰 Test Creative Financing
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+    <div class="flex items-center">
+      <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-yellow-600"></div>
+      <span class="ml-3 text-yellow-800">{{ connectionStatus }}</span>
+    </div>
+  </div>
+
+  <!-- Status Display -->
+  <div *ngIf="connectionStatus && !isLoading" class="mb-6 p-4 rounded-lg" 
+       [ngClass]="connectionStatus.includes('✅') ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'">
+    <h3 class="font-semibold mb-2" [ngClass]="connectionStatus.includes('✅') ? 'text-green-800' : 'text-red-800'">
+      {{ connectionStatus }}
+    </h3>
+    <p *ngIf="testResult" class="text-sm whitespace-pre-line" [ngClass]="connectionStatus.includes('✅') ? 'text-green-700' : 'text-red-700'">
+      {{ testResult }}
+    </p>
+  </div>
+
+  <!-- Error Display -->
+  <div *ngIf="errorMessage" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+    <h3 class="font-semibold text-red-800 mb-2">Error</h3>
+    <p class="text-red-700">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Sample Deal Info -->
+  <div class="mt-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+    <h3 class="text-lg font-semibold text-gray-900 mb-3">📋 Sample Deal Data</h3>
+    <div class="grid grid-cols-2 gap-4 text-sm">
+      <div><strong>Property Value:</strong> ${{ sampleDeal.propertyValue.toLocaleString() }}</div>
+      <div><strong>Down Payment:</strong> ${{ sampleDeal.downPayment.toLocaleString() }}</div>
+      <div><strong>Interest Rate:</strong> {{ sampleDeal.interestRate }}%</div>
+      <div><strong>Monthly Rent:</strong> ${{ sampleDeal.monthlyRent }}</div>
+      <div><strong>Property Type:</strong> {{ sampleDeal.propertyType }}</div>
+      <div><strong>Location:</strong> {{ sampleDeal.location }}</div>
+      <div><strong>Risk Tolerance:</strong> {{ sampleDeal.riskTolerance }}</div>
+      <div><strong>Investment Horizon:</strong> {{ sampleDeal.investmentHorizon }} years</div>
+    </div>
+  </div>
+</div>
